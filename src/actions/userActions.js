@@ -2,7 +2,7 @@ import * as types from "../constants/ActionTypes";
 import config from "../config";
 import { push } from "react-router-redux";
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 20;
 
 export const searchUser = username => async dispatch => {
   dispatch({
