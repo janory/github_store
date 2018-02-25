@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import RaisedButton from "material-ui/RaisedButton";
+import Button from "material-ui/Button";
 
 export default class UserSearchView extends Component {
   render() {
     return (
       <div>
         <h1>User search</h1>
-        <RaisedButton label="Default" />
+        <Button label="Default" />
       </div>
     );
   }
