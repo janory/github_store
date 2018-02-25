@@ -6,7 +6,7 @@ export default class UserSearchView extends Component {
   render() {
     return (
       <div>
-        <SearchBar text={"Search for users... "} callback={() => alert("fired!")}/>
+        <SearchBar text={"Search for users... "} callback={(val) => alert(val)}/>
       </div>
     );
   }
