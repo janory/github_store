@@ -26,13 +26,13 @@ export const searchUser = username => async dispatch => {
       throw Error(response.statusText);
     }
 
-    const data = await response.json();
+    const repositories = await response.json();
 
     dispatch({
       type: types.FETCH_USER_FINISHED,
       payload: {
         username,
-        data
+        repositories
       }
     });
     dispatch(push(`/user/${username}/repos`));

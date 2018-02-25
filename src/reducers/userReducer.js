@@ -2,18 +2,17 @@ import * as types from "../constants/ActionTypes";
 
 export default function reducer(
   state = {
-    username: null
+    username: null,
+    repositories: []
   },
   action
 ) {
 
   switch (action.type) {
     case types.FETCH_USER_FINISHED: {
-      console.log("i log this: " + action.type);
-      return { ...state, username: action.payload.username };
+      return { ...state, username: action.payload.username, repositories: action.payload.repositories };
     }
     default: {
-      console.log("i log this default: " + action.type);
       return state;
     }
   }
