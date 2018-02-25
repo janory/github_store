@@ -1,8 +1,9 @@
 import * as types from "../constants/ActionTypes";
 import config from "../config";
+import { push } from 'react-router-redux';
 
 
-export const searchUser = username => async (dispatch) => {
+export const searchUser = username => async dispatch => {
   dispatch({
     type: types.FETCH_USER_STARTED,
     payload: {
@@ -27,6 +28,7 @@ export const searchUser = username => async (dispatch) => {
 
     const data = await response.json();
 
+    dispatch(push(`/user/${username}/repos`));
     dispatch({
       type: types.FETCH_USER_FINISHED,
       payload: {
