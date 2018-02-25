@@ -1,6 +1,6 @@
 import * as types from "../constants/ActionTypes";
 import config from "../config";
-import { push } from 'react-router-redux';
+import { push } from "react-router-redux";
 
 const PAGE_SIZE = 100;
 

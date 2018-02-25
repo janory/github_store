@@ -7,10 +7,13 @@ export default function reducer(
   },
   action
 ) {
-
   switch (action.type) {
     case types.FETCH_USER_FINISHED: {
-      return { ...state, username: action.payload.username, repositories: action.payload.repositories };
+      return {
+        ...state,
+        username: action.payload.username,
+        repositories: action.payload.repositories
+      };
     }
     default: {
       return state;
