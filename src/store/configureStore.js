@@ -10,6 +10,6 @@ export default function configureStore(history) {
       ...reducers,
       router: routerReducer
     }),
-    applyMiddleware(routerMiddleware(history), logger, thunk)
+    applyMiddleware(routerMiddleware(history), thunk)
   );
 }

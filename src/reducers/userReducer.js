@@ -6,11 +6,15 @@ export default function reducer(
   },
   action
 ) {
+
   switch (action.type) {
     case types.FETCH_USER_FINISHED: {
+      console.log("i log this: " + action.type);
       return { ...state, username: action.payload.username };
     }
-    default:
+    default: {
+      console.log("i log this default: " + action.type);
       return state;
+    }
   }
 }

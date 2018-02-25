@@ -28,13 +28,14 @@ export const searchUser = username => async dispatch => {
 
     const data = await response.json();
 
-    dispatch(push(`/user/${username}/repos`));
     dispatch({
       type: types.FETCH_USER_FINISHED,
       payload: {
+        username,
         data
       }
     });
+    dispatch(push(`/user/${username}/repos`));
 
     return true;
   } catch (e) {
