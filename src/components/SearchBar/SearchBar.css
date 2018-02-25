@@ -1,0 +1,9 @@
+div.search-bar {
+  margin-top: 20px;
+  display: flex;
+}
+
+div.search-bar > input {
+  flex-grow: 1;
+  font-size: 16px;
+}

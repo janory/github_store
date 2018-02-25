@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import Button from "material-ui/Button";
+import SearchBar from "../components/SearchBar";
+
 
 export default class UserSearchView extends Component {
   render() {
     return (
       <div>
-        <h1>User search</h1>
-        <Button label="Default" />
+        <SearchBar text={"Search for users... "} callback={() => alert("fired!")}/>
       </div>
     );
   }
