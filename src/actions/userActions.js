@@ -2,6 +2,7 @@ import * as types from "../constants/ActionTypes";
 import config from "../config";
 import { push } from 'react-router-redux';
 
+const PAGE_SIZE = 100;
 
 export const searchUser = username => async dispatch => {
   dispatch({
@@ -13,7 +14,7 @@ export const searchUser = username => async dispatch => {
 
   try {
     const response = await fetch(
-      `${config.githubApi}/users/${username}/repos`,
+      `${config.githubApi}/users/${username}/repos?per_page=${PAGE_SIZE}`,
       {
         method: "GET",
         headers: {

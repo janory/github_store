@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import { connect } from "react-redux";
+import {searchUser} from "../actions/userActions";
 
 const mapStateToProps = state => ({
   username: state.user.username,
@@ -8,11 +9,21 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  searchUser: username => dispatch(searchUser(username))
 });
 
 class RepoListView extends Component {
+
+  componentDidMount() {
+    const { repositories, match } = this.props;
+
+    if (repositories.length === 0) {
+      this.props.searchUser(match.params.username)
+    }
+  }
+
   render() {
-    const repos = this.props.repositories.map(repos => <li>{repos.name}</li>);
+    const repos = this.props.repositories.map(repos => <li key={repos.id}>{repos.name}</li>);
 
     return (
       <div>
