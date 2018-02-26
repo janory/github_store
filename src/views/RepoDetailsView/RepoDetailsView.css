@@ -1,0 +1,9 @@
+div.repo-details-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+div.repo-details-view ul {
+  overflow: auto;
+}

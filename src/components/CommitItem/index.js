@@ -7,7 +7,7 @@ export default class CommitItem extends Component {
     const { message, author } = this.props;
 
     return (
-      <div className="repo-item">
+      <div className="commit-item">
         <ListItem>
           <ListItemText primary={message} secondary={author.name} />
         </ListItem>

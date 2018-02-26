@@ -3,8 +3,11 @@ import List from "material-ui/List";
 import { connect } from "react-redux";
 import CommitItem from "../../components/CommitItem/index";
 import { loadCommitsForRepo } from "../../actions/repositoryActions";
+import "./RepoDetailsView.css";
+
 
 const mapStateToProps = state => ({
+  username: state.repository.username,
   reponame: state.repository.reponame,
   commits: state.repository.commits
 });
@@ -23,7 +26,7 @@ class RepoListView extends Component {
   }
 
   render() {
-    const { reponame } = this.props;
+    const { reponame, username } = this.props;
 
     const commits = this.props.commits.map((commitItem, idx) => (
       <CommitItem
@@ -34,8 +37,9 @@ class RepoListView extends Component {
     ));
 
     return (
-      <div className="repo-list-view">
-        <h1>{reponame}</h1>
+      <div className="repo-details-view">
+        <h1>Owner: {username}</h1>
+        <h1>Repository: {reponame}</h1>
         <List>{commits}</List>
       </div>
     );
