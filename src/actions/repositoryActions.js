@@ -1,6 +1,5 @@
 import * as types from "../constants/ActionTypes";
 import config from "../config";
-import { push } from "react-router-redux";
 
 const PAGE_SIZE = 20;
 
@@ -77,6 +76,7 @@ export const loadCommitsForRepo = (owner, reponame) => async dispatch => {
     dispatch({
       type: types.LOAD_COMMITS_FINISHED,
       payload: {
+        reponame,
         commits
       }
     });

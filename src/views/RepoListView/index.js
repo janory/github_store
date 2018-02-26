@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import List from "material-ui/List";
 import { connect } from "react-redux";
 import RepoItem from "../../components/RepoItem/index";
-import { loadReposForUser, loadCommitsForRepo } from "../../actions/repositoryActions";
+import { loadReposForUser } from "../../actions/repositoryActions";
 import "./RepoListView.css";
 
 
@@ -12,8 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadReposForUser: username => dispatch(loadReposForUser(username)),
-  loadCommitsForRepo: (owner, reponame) => dispatch(loadCommitsForRepo(owner, reponame))
+  loadReposForUser: username => dispatch(loadReposForUser(username))
 });
 
 class RepoListView extends Component {
@@ -26,7 +25,7 @@ class RepoListView extends Component {
   }
 
   render() {
-    const {username, loadCommitsForRepo} = this.props;
+    const { username } = this.props;
 
     const repos = this.props.repositories.map(repos => (
       <RepoItem
@@ -34,7 +33,6 @@ class RepoListView extends Component {
         name={repos.name}
         owner={username}
         description={repos.description}
-        loadCommitsForRepo={loadCommitsForRepo}
       />
     ));
 

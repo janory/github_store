@@ -19,6 +19,7 @@ export default function reducer(
     case types.LOAD_COMMITS_FINISHED: {
       return {
         ...state,
+        reponame: action.payload.reponame,
         commits: action.payload.commits
       };
     }
