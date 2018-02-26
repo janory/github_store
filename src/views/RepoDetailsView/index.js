@@ -2,18 +2,19 @@ import React, { Component } from "react";
 import List from "material-ui/List";
 import { connect } from "react-redux";
 import CommitItem from "../../components/CommitItem/index";
-import { loadCommitsForRepo } from "../../actions/repositoryActions";
+import SearchBar from "../../components/SearchBar/index";
+import { loadCommitsForRepo, searchForCommits } from "../../actions/repositoryActions";
 import "./RepoDetailsView.css";
 
 
 const mapStateToProps = state => ({
-  username: state.repository.username,
   reponame: state.repository.reponame,
   commits: state.repository.commits
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadCommitsForRepo: (owner, repo) => dispatch(loadCommitsForRepo(owner, repo))
+  loadCommitsForRepo: (owner, reponame) => dispatch(loadCommitsForRepo(owner, reponame)),
+  searchForCommits: (owner, reponame, message) => dispatch(searchForCommits(owner, reponame, message))
 });
 
 class RepoListView extends Component {
@@ -25,8 +26,13 @@ class RepoListView extends Component {
     }
   }
 
+  searchForCommitsWithOutParams = (message) => {
+    const { reponame, searchForCommits, match } = this.props;
+    searchForCommits(match.params.owner, reponame, message);
+  };
+
   render() {
-    const { reponame, username } = this.props;
+    const { reponame, match } = this.props;
 
     const commits = this.props.commits.map((commitItem, idx) => (
       <CommitItem
@@ -38,8 +44,11 @@ class RepoListView extends Component {
 
     return (
       <div className="repo-details-view">
-        <h1>Owner: {username}</h1>
+        <h1>Owner: {match.params.owner}</h1>
         <h1>Repository: {reponame}</h1>
+        <div>
+          <SearchBar text={"Search for commits "} callback={this.searchForCommitsWithOutParams} />
+        </div>
         <List>{commits}</List>
       </div>
     );

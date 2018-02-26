@@ -7,7 +7,7 @@ const ENTER_KEY = 13;
 export default class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "" };
+    this.state = { searchText: "" };
   }
 
   handleChange = event => {
@@ -25,8 +25,8 @@ export default class SearchBar extends Component {
   };
 
   triggerSearch = () => {
-    if (this.state.username.trim()) {
-      this.props.callback(this.state.username);
+    if (this.state.searchText.trim()) {
+      this.props.callback(this.state.searchText);
     }
   };
 
@@ -34,7 +34,7 @@ export default class SearchBar extends Component {
     return (
       <div className="search-bar">
         <input
-          name="username"
+          name="searchText"
           type="text"
           placeholder={this.props.text}
           onChange={this.handleChange.bind(this)}
