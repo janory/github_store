@@ -6,7 +6,6 @@ import { loadReposForUser, loadCommitsAndNavigateToRepoDetails } from "../../act
 import "./RepoListView.css";
 
 const mapStateToProps = state => ({
-  username: state.repository.username,
   repositories: state.repository.repositories
 });
 
@@ -25,13 +24,13 @@ class RepoListView extends Component {
   }
 
   render() {
-    const { username } = this.props;
+    const { match } = this.props;
 
     const repos = this.props.repositories.map(repos => (
       <RepoItem
         key={repos.id}
         name={repos.name}
-        owner={username}
+        owner={match.params.username}
         description={repos.description}
         callback={this.props.loadCommitsAndNavigateToRepoDetails}
       />
@@ -39,7 +38,7 @@ class RepoListView extends Component {
 
     return (
       <div className="repo-list-view">
-        <h1>Owner: {username}</h1>
+        <h1>Owner: {match.params.username}</h1>
         <List>{repos}</List>
       </div>
     );

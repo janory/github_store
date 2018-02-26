@@ -37,7 +37,6 @@ export const loadReposForUser = username => async dispatch => {
     dispatch({
       type: types.LOAD_REPOSITORIES_FINISHED,
       payload: {
-        username,
         repositories
       }
     });

@@ -12,7 +12,6 @@ export default function reducer(
     case types.LOAD_REPOSITORIES_FINISHED: {
       return {
         ...state,
-        username: action.payload.username,
         repositories: action.payload.repositories
       };
     }
