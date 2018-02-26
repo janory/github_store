@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import List from "material-ui/List";
 import { connect } from "react-redux";
 import RepoItem from "../../components/RepoItem/index";
-import { loadReposForUser, loadCommitsAndNavigateToRepoDetails } from "../../actions/repositoryActions";
+import {
+  loadReposForUser,
+  loadCommitsAndNavigateToRepoDetails
+} from "../../actions/repositoryActions";
 import "./RepoListView.css";
 
 const mapStateToProps = state => ({
@@ -11,7 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadReposForUser: username => dispatch(loadReposForUser(username)),
-  loadCommitsAndNavigateToRepoDetails: (owner, reponame) => dispatch(loadCommitsAndNavigateToRepoDetails(owner, reponame))
+  loadCommitsAndNavigateToRepoDetails: (owner, reponame) =>
+    dispatch(loadCommitsAndNavigateToRepoDetails(owner, reponame))
 });
 
 class RepoListView extends Component {

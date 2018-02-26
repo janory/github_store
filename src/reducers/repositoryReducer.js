@@ -4,7 +4,8 @@ export default function reducer(
   state = {
     username: null,
     repositories: [],
-    commits: []
+    commits: [],
+    filteredCommits: []
   },
   action
 ) {
@@ -19,7 +20,21 @@ export default function reducer(
       return {
         ...state,
         reponame: action.payload.reponame,
-        commits: action.payload.commits
+        commits: action.payload.commits,
+        filteredCommits: []
+
+      };
+    }
+    case types.FILTER_COMMITS_FINISHED: {
+      return {
+        ...state,
+        filteredCommits: action.payload.filteredCommits
+      };
+    }
+    case types.REMOVE_FILTER_FOR_COMMITS: {
+      return {
+        ...state,
+        filteredCommits: []
       };
     }
     default: {

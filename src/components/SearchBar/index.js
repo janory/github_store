@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Button from "material-ui/Button";
+import Clear from "material-ui-icons/Clear";
 import "./SearchBar.css";
 
 const ENTER_KEY = 13;
@@ -7,14 +8,20 @@ const ENTER_KEY = 13;
 export default class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { searchText: "" };
+    this.state = { value: "" };
   }
 
   handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-    event.preventDefault();
+    this.setState({ value: event.target.value });
+  };
+
+  clearFilter = () => {
+    const { clearCallback } = this.props;
+
+    this.setState({ value: "" });
+    if (clearCallback) {
+      clearCallback();
+    }
   };
 
   handleKeyDown = event => {
@@ -25,8 +32,8 @@ export default class SearchBar extends Component {
   };
 
   triggerSearch = () => {
-    if (this.state.searchText.trim()) {
-      this.props.callback(this.state.searchText);
+    if (this.state.value.trim()) {
+      this.props.submitCallback(this.state.value);
     }
   };
 
@@ -39,6 +46,7 @@ export default class SearchBar extends Component {
           placeholder={this.props.text}
           onChange={this.handleChange.bind(this)}
           onKeyDown={this.handleKeyDown.bind(this)}
+          value={this.state.value}
         />
         <Button
           variant="raised"
@@ -46,6 +54,14 @@ export default class SearchBar extends Component {
           onClick={this.triggerSearch.bind(this)}
         >
           Search
+        </Button>
+        <Button
+          variant="raised"
+          color="secondary"
+          className="clear-button"
+          onClick={this.clearFilter.bind(this)}
+        >
+          <Clear />
         </Button>
       </div>
     );

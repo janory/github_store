@@ -3,21 +3,33 @@ import List from "material-ui/List";
 import { connect } from "react-redux";
 import CommitItem from "../../components/CommitItem/index";
 import SearchBar from "../../components/SearchBar/index";
-import { loadCommitsForRepo, searchForCommits } from "../../actions/repositoryActions";
+import {
+  loadCommitsForRepo,
+  removeFilterForCommits,
+  searchForCommits
+} from "../../actions/repositoryActions";
 import "./RepoDetailsView.css";
-
 
 const mapStateToProps = state => ({
   reponame: state.repository.reponame,
-  commits: state.repository.commits
+  commits: state.repository.commits,
+  filteredCommits: state.repository.filteredCommits
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadCommitsForRepo: (owner, reponame) => dispatch(loadCommitsForRepo(owner, reponame)),
-  searchForCommits: (owner, reponame, message) => dispatch(searchForCommits(owner, reponame, message))
+  loadCommitsForRepo: (owner, reponame) =>
+    dispatch(loadCommitsForRepo(owner, reponame)),
+  searchForCommits: (owner, reponame, message) =>
+    dispatch(searchForCommits(owner, reponame, message)),
+  removeFilterForCommits: () => dispatch(removeFilterForCommits)
 });
 
 class RepoListView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: "" };
+  }
+
   componentDidMount() {
     const { match, commits } = this.props;
 
@@ -26,30 +38,47 @@ class RepoListView extends Component {
     }
   }
 
-  searchForCommitsWithOutParams = (message) => {
+  searchForCommitsWithOutParams = message => {
     const { reponame, searchForCommits, match } = this.props;
     searchForCommits(match.params.owner, reponame, message);
   };
 
-  render() {
-    const { reponame, match } = this.props;
+  clearFilter = () => {
+    this.props.removeFilterForCommits();
+  };
 
-    const commits = this.props.commits.map((commitItem, idx) => (
-      <CommitItem
-        key={idx}
-        message={commitItem.commit.message}
-        author={commitItem.commit.author}
-      />
-    ));
+  render() {
+    const { reponame, match, commits, filteredCommits } = this.props;
+
+    const commitItems =
+      filteredCommits.length > 0
+        ? filteredCommits.map((commitItem, idx) => (
+            <CommitItem
+              key={idx}
+              message={commitItem.commit.message}
+              author={commitItem.commit.author}
+            />
+          ))
+        : commits.map((commitItem, idx) => (
+            <CommitItem
+              key={idx}
+              message={commitItem.commit.message}
+              author={commitItem.commit.author}
+            />
+          ));
 
     return (
       <div className="repo-details-view">
         <h1>Owner: {match.params.owner}</h1>
         <h1>Repository: {reponame}</h1>
         <div>
-          <SearchBar text={"Search for commits "} callback={this.searchForCommitsWithOutParams} />
+          <SearchBar
+            text={"Search for commits "}
+            clearCallback={this.clearFilter}
+            submitCallback={this.searchForCommitsWithOutParams}
+          />
         </div>
-        <List>{commits}</List>
+        <List>{commitItems}</List>
       </div>
     );
   }

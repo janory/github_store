@@ -53,18 +53,25 @@ export const loadReposForUser = username => async dispatch => {
   }
 };
 
-export const loadCommitsAndNavigateToRepoDetails = (owner, reponame) => async dispatch => {
+export const loadCommitsAndNavigateToRepoDetails = (
+  owner,
+  reponame
+) => async dispatch => {
   await dispatch(loadCommitsForRepo(owner, reponame));
   dispatch(push(`/repos/${owner}/${reponame}/commits`));
 };
 
-// https://api.github.com/search/commits?utf8=%E2%9C%93&q=Alphabetize+and+clean+repo%3Afacebook%2Fcreate-react-app&type=Commits
-export const searchForCommits = (owner, reponame, message) => async dispatch => {
+export const searchForCommits = (
+  owner,
+  reponame,
+  message
+) => async dispatch => {
   try {
     const response = await fetch(
-      `${
-        config.githubApi
-        }/search/commits?utf8=%E2%9C%93&q=${message.replace(/\s+/g, '+')}+repo%3A${owner}%2F${reponame}&type=Commits`,
+      `${config.githubApi}/search/commits?utf8=%E2%9C%93&q=${message.replace(
+        /\s+/g,
+        "+"
+      )}+repo%3A${owner}%2F${reponame}&type=Commits`,
       {
         method: "GET",
         headers: {
@@ -87,23 +94,26 @@ export const searchForCommits = (owner, reponame, message) => async dispatch => 
 
     // set the next page link in the store if it's given or set it to null
     dispatch({
-      type: types.LOAD_COMMITS_FINISHED,
+      type: types.FILTER_COMMITS_FINISHED,
       payload: {
-        reponame,
-        commits: commits.items
+        filteredCommits: commits.items
       }
     });
 
     return true;
   } catch (e) {
     dispatch({
-      type: types.LOAD_COMMITS_FAILED,
+      type: types.FILTER_COMMITS_FAILED,
       payload: {
         error: e.message
       }
     });
     return false;
   }
+};
+
+export const removeFilterForCommits = {
+  type: types.REMOVE_FILTER_FOR_COMMITS
 };
 
 export const loadCommitsForRepo = (owner, reponame) => async dispatch => {

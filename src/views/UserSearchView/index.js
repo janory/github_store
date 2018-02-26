@@ -4,14 +4,17 @@ import { connect } from "react-redux";
 import { loadReposAndNavigateToRepos } from "../../actions/repositoryActions";
 
 const mapDispatchToProps = dispatch => ({
-  loadReposAndNavigateToRepos: username => dispatch(loadReposAndNavigateToRepos(username))
+  loadReposAndNavigateToRepos: username =>
+    dispatch(loadReposAndNavigateToRepos(username))
 });
 
 class UserSearchView extends Component {
   render() {
     return (
       <div>
-        <SearchBar text={"Search repositories by user... "} callback={this.props.loadReposAndNavigateToRepos}
+        <SearchBar
+          text={"Search repositories by user... "}
+          submitCallback={this.props.loadReposAndNavigateToRepos}
         />
       </div>
     );
