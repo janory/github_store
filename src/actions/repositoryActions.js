@@ -36,7 +36,6 @@ export const loadReposForUser = username => async dispatch => {
         repositories
       }
     });
-    dispatch(push(`/user/${username}/repos`));
 
     return true;
   } catch (e) {

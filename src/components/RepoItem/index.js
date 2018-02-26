@@ -4,9 +4,6 @@ import Divider from "material-ui/Divider";
 
 export default class RepoItem extends Component {
   render() {
-    console.log(this.props.owner);
-    console.log(this.props.name);
-
     return (
       <div className="repo-item">
         <ListItem button>

@@ -26,21 +26,21 @@ class RepoListView extends Component {
   }
 
   render() {
-    console.log(this.props.username);
+    const {username, loadCommitsForRepo} = this.props;
 
     const repos = this.props.repositories.map(repos => (
       <RepoItem
         key={repos.id}
         name={repos.name}
-        owner={this.props.username}
+        owner={username}
         description={repos.description}
-        loadCommitsForRepo={this.props.loadCommitsForRepo}
+        loadCommitsForRepo={loadCommitsForRepo}
       />
     ));
 
     return (
       <div className="repo-list-view">
-        <h1>{this.props.username}</h1>
+        <h1>{username}</h1>
         <List>{repos}</List>
       </div>
     );
