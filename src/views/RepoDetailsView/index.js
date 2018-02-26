@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 
 class RepoListView extends Component {
   componentDidMount() {
-    const { commits, match } = this.props;
+    const { match, commits } = this.props;
 
     if (commits.length === 0) {
       this.props.loadCommitsForRepo(match.params.owner, match.params.repo);

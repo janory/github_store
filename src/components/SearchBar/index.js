@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import Button from "material-ui/Button";
-import { withRouter } from "react-router-dom";
 import "./SearchBar.css";
 
 const ENTER_KEY = 13;
 
-class SearchBar extends Component {
+export default class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = { username: "" };
@@ -27,7 +26,7 @@ class SearchBar extends Component {
 
   triggerSearch = () => {
     if (this.state.username.trim()) {
-      this.props.history.push(`/user/${this.state.username}/repos`);
+      this.props.callback(this.state.username);
     }
   };
 
@@ -52,5 +51,3 @@ class SearchBar extends Component {
     );
   }
 }
-
-export default withRouter(SearchBar);

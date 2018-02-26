@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { ListItem, ListItemText } from "material-ui/List";
 import Divider from "material-ui/Divider";
-import { withRouter } from "react-router-dom";
 
-class RepoItem extends Component {
+export default class RepoItem extends Component {
+
+  loadCommits = (owner, name) => {
+      this.props.callback(owner, name);
+    }
+
   render() {
     const { name, owner, description, history } = this.props;
 
@@ -13,9 +17,7 @@ class RepoItem extends Component {
           <ListItemText
             primary={name}
             secondary={description}
-            onClick={() => {
-              history.push(`/repos/${owner}/${name}/commits`);
-            }}
+            onClick={this.loadCommits.bind(this, owner, name)}
           />
         </ListItem>
         <Divider />
@@ -23,5 +25,3 @@ class RepoItem extends Component {
     );
   }
 }
-
-export default withRouter(RepoItem);

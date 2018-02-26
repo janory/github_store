@@ -1,7 +1,13 @@
 import * as types from "../constants/ActionTypes";
 import config from "../config";
+import { push } from "react-router-redux";
 
 const PAGE_SIZE = 20;
+
+export const loadReposAndNavigateToRepos = username => async dispatch => {
+  await dispatch(loadReposForUser(username));
+  dispatch(push(`/user/${username}/repos`));
+};
 
 export const loadReposForUser = username => async dispatch => {
   try {
@@ -46,6 +52,11 @@ export const loadReposForUser = username => async dispatch => {
     });
     return false;
   }
+};
+
+export const loadCommitsAndNavigateToRepoDetails = (owner, reponame) => async dispatch => {
+  await dispatch(loadCommitsForRepo(owner, reponame));
+  dispatch(push(`/repos/${owner}/${reponame}/commits`));
 };
 
 export const loadCommitsForRepo = (owner, reponame) => async dispatch => {
