@@ -3,7 +3,8 @@ import * as types from "../constants/ActionTypes";
 export default function reducer(
   state = {
     username: null,
-    repositories: []
+    repositories: [],
+    commits: []
   },
   action
 ) {
@@ -13,6 +14,12 @@ export default function reducer(
         ...state,
         username: action.payload.username,
         repositories: action.payload.repositories
+      };
+    }
+    case types.LOAD_COMMITS_FINISHED: {
+      return {
+        ...state,
+        commits: action.payload.commits
       };
     }
     default: {
