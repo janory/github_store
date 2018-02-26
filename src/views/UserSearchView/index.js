@@ -5,9 +5,7 @@ export default class UserSearchView extends Component {
   render() {
     return (
       <div>
-        <SearchBar
-          text={"Search repositories by user... "}
-        />
+        <SearchBar text={"Search repositories by user... "} />
       </div>
     );
   }

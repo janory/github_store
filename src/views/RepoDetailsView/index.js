@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import CommitItem from "../../components/CommitItem/index";
 import { loadCommitsForRepo } from "../../actions/repositoryActions";
 
-
 const mapStateToProps = state => ({
   reponame: state.repository.reponame,
   commits: state.repository.commits

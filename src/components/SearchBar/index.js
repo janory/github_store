@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Button from "material-ui/Button";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import "./SearchBar.css";
 
 const ENTER_KEY = 13;

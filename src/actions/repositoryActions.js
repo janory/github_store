@@ -51,7 +51,9 @@ export const loadReposForUser = username => async dispatch => {
 export const loadCommitsForRepo = (owner, reponame) => async dispatch => {
   try {
     const response = await fetch(
-      `${config.githubApi}/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`,
+      `${
+        config.githubApi
+      }/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`,
       {
         method: "GET",
         headers: {

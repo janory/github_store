@@ -5,7 +5,6 @@ import RepoItem from "../../components/RepoItem/index";
 import { loadReposForUser } from "../../actions/repositoryActions";
 import "./RepoListView.css";
 
-
 const mapStateToProps = state => ({
   username: state.repository.username,
   repositories: state.repository.repositories

@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import Grid from "material-ui/Grid";
 import "./App.css";
 
-
 export default class App extends Component {
   render() {
     return (
