@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import SearchBar from "../components/SearchBar";
-import { loadReposForUser } from "../actions/repositoryActions";
+import SearchBar from "../../components/SearchBar/index";
+import { loadReposForUser } from "../../actions/repositoryActions";
 
 const mapDispatchToProps = dispatch => ({
   loadReposForUser: username => dispatch(loadReposForUser(username))

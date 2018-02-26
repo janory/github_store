@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import List from "material-ui/List";
 import { connect } from "react-redux";
-import RepoItem from "../components/RepoItem";
-import { loadReposForUser } from "../actions/repositoryActions";
+import RepoItem from "../../components/RepoItem/index";
+import { loadReposForUser } from "../../actions/repositoryActions";
+import "./RepoListView.css";
+
 
 const mapStateToProps = state => ({
   username: state.repository.username,
@@ -32,7 +34,7 @@ class RepoListView extends Component {
     ));
 
     return (
-      <div>
+      <div className="repo-list-view">
         <h1>{this.props.username}</h1>
         <List>{repos}</List>
       </div>
