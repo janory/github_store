@@ -1,5 +1,5 @@
-import user from "./userReducer";
+import repository from "./repositoryReducer";
 
 export default {
-  user
+  repository
 };

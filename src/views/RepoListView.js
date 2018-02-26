@@ -2,15 +2,15 @@ import React, { Component } from "react";
 import List from "material-ui/List";
 import { connect } from "react-redux";
 import RepoItem from "../components/RepoItem";
-import { searchUser } from "../actions/userActions";
+import { loadReposForUser } from "../actions/repositoryActions";
 
 const mapStateToProps = state => ({
-  username: state.user.username,
-  repositories: state.user.repositories
+  username: state.repository.username,
+  repositories: state.repository.repositories
 });
 
 const mapDispatchToProps = dispatch => ({
-  searchUser: username => dispatch(searchUser(username))
+  searchUser: username => dispatch(loadReposForUser(username))
 });
 
 class RepoListView extends Component {

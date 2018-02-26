@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SearchBar from "../components/SearchBar";
-import { searchUser } from "../actions/userActions";
+import { loadReposForUser } from "../actions/repositoryActions";
 
 const mapDispatchToProps = dispatch => ({
-  searchUser: username => dispatch(searchUser(username))
+  loadReposForUser: username => dispatch(loadReposForUser(username))
 });
 
 class UserSearchView extends Component {
@@ -12,8 +12,8 @@ class UserSearchView extends Component {
     return (
       <div>
         <SearchBar
-          text={"Search for users... "}
-          callback={this.props.searchUser}
+          text={"Search repositories by user... "}
+          callback={this.props.loadReposForUser}
         />
       </div>
     );

@@ -8,7 +8,7 @@ export default function reducer(
   action
 ) {
   switch (action.type) {
-    case types.FETCH_USER_FINISHED: {
+    case types.LOAD_REPOSITORIES_FINISHED: {
       return {
         ...state,
         username: action.payload.username,
