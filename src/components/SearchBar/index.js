@@ -8,9 +8,9 @@ export default class SearchBar extends Component {
     this.state = { username: "" };
   }
 
-  handleChange = (name, event) => {
+  handleChange = (event) => {
     this.setState({
-      [name]: event.target.value
+      [event.target.name]: event.target.value
     });
   };
 
@@ -22,9 +22,10 @@ export default class SearchBar extends Component {
     return (
       <div className="search-bar">
         <input
+          name="username"
           type="text"
           placeholder={this.props.text}
-          onChange={this.handleChange.bind(this, "username")}
+          onChange={this.handleChange.bind(this)}
         />
         <Button
           variant="raised"
