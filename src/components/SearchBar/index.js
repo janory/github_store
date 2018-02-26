@@ -2,20 +2,32 @@ import React, { Component } from "react";
 import Button from "material-ui/Button";
 import "./SearchBar.css";
 
+const ENTER_KEY = 13;
+
 export default class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = { username: "" };
   }
 
-  handleChange = (event) => {
+  handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
+    event.preventDefault();
+  };
+
+  handleKeyDown = event => {
+    if (event.keyCode === ENTER_KEY) {
+      this.triggerSearch();
+      event.preventDefault();
+    }
   };
 
   triggerSearch = () => {
-    this.props.callback(this.state.username);
+    if (this.state.username.trim()) {
+      this.props.callback(this.state.username);
+    }
   };
 
   render() {
@@ -26,6 +38,7 @@ export default class SearchBar extends Component {
           type="text"
           placeholder={this.props.text}
           onChange={this.handleChange.bind(this)}
+          onKeyDown={this.handleKeyDown.bind(this)}
         />
         <Button
           variant="raised"
