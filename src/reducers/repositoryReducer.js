@@ -22,7 +22,6 @@ export default function reducer(
         reponame: action.payload.reponame,
         commits: action.payload.commits,
         filteredCommits: []
-
       };
     }
     case types.FILTER_COMMITS_FINISHED: {

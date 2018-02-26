@@ -12,12 +12,8 @@ export default class RepoItem extends Component {
 
     return (
       <div className="repo-item">
-        <ListItem button>
-          <ListItemText
-            primary={name}
-            secondary={description}
-            onClick={this.loadCommits.bind(this, owner, name)}
-          />
+        <ListItem button onClick={this.loadCommits.bind(this, owner, name)}>
+          <ListItemText primary={name} secondary={description} />
         </ListItem>
         <Divider />
       </div>
