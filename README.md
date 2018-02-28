@@ -4,7 +4,13 @@ GitHub Store is a small pseudo app created by Janos Szathmary,  as a part of the
 
 The purpose of this app is to test the skills of the candidate.
 
-__GitHub Store was tested with the following GitHub users: facebook, ScaCap__
+__GitHub Store__ was tested
+* with the following GitHub users: __facebook__, __ScaCap__ 
+* under Chrome and Safari
+
+After ````yarn start```` the application is available under the following url: [http://localhost:3000/search](http://localhost:3000/search)
+
+
 
 ## List of the used ECMA6 features
 * __arrow functions__ used almost everywhere
