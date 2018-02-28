@@ -103,58 +103,33 @@ export const removeFilterForCommits = {
   type: types.REMOVE_FILTER_FOR_COMMITS
 };
 
-export const loadNextPageForCommits = async (dispatch, getState) => {
-  try {
-    const currentState = getState();
-    const response = await fetch(currentState.repository.nextPageOfCommits,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
-      }
-    );
 
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-
-    const nextCommits = await response.json();
-
-    const links = parseLinkHeader(response.headers.get("Link"));
-    const nextPageOfCommits = (links && links.next) ? links.next.url : null;
-
-    // set the next page link in the store if it's given or set it to null
-    dispatch({
-      type: types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED,
-      payload: {
-        nextCommits,
-        nextPageOfCommits
-      }
-    });
-
-    return true;
-  } catch (e) {
-    dispatch({
-      type: types.LOAD_NEXT_PAGE_OF_COMMITS_FAILED,
-      payload: {
-        error: e.message
-      }
-    });
-    return false;
-  }
+export const loadNextPageForCommits = (dispatch, getState) => {
+  dispatch(loadCommits(
+    types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED,
+    types.LOAD_NEXT_PAGE_OF_COMMITS_FAILED,
+    getState().repository.nextPageOfCommits
+  ));
 };
 
-export const loadCommitsForRepo = (owner, reponame) => async (dispatch, getState) => {
+export const loadCommitsForRepo = (owner, reponame) => dispatch => {
+  dispatch(loadCommits(
+    types.LOAD_COMMITS_FINISHED,
+    types.LOAD_COMMITS_FAILED,
+    `${
+      config.githubApi
+      }/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`
+  ));
+};
+
+const loadCommits = (finisEvent, failureEvent, url) => async dispatch => {
   try {
-    const response = await fetch(`${config.githubApi}/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
       }
-    );
+    });
 
     if (!response.ok) {
       throw Error(response.statusText);
@@ -163,13 +138,11 @@ export const loadCommitsForRepo = (owner, reponame) => async (dispatch, getState
     const commits = await response.json();
 
     const links = parseLinkHeader(response.headers.get("Link"));
-    const nextPageOfCommits = (links && links.next) ? links.next.url : null;
+    const nextPageOfCommits = links && links.next ? links.next.url : null;
 
-    // set the next page link in the store if it's given or set it to null
     dispatch({
-      type: types.LOAD_COMMITS_FINISHED,
+      type: finisEvent,
       payload: {
-        reponame,
         commits,
         nextPageOfCommits
       }
@@ -178,7 +151,7 @@ export const loadCommitsForRepo = (owner, reponame) => async (dispatch, getState
     return true;
   } catch (e) {
     dispatch({
-      type: types.LOAD_COMMITS_FAILED,
+      type: failureEvent,
       payload: {
         error: e.message
       }

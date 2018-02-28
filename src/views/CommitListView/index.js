@@ -10,8 +10,7 @@ import {
   loadNextPageForCommits
 } from "../../actions/repositoryActions";
 import "./CommitListView.css";
-import InfiniteScroll from 'react-infinite-scroller';
-
+import InfiniteScroll from "react-infinite-scroller";
 
 const mapStateToProps = state => ({
   reponame: state.repository.reponame,
@@ -53,7 +52,14 @@ class CommitListView extends Component {
   };
 
   render() {
-    const { nextPageOfCommits, reponame, match, commits, filteredCommits, loadNextPageForCommits } = this.props;
+    const {
+      nextPageOfCommits,
+      reponame,
+      match,
+      commits,
+      filteredCommits,
+      loadNextPageForCommits
+    } = this.props;
 
     const commitItems =
       filteredCommits.length > 0
@@ -83,22 +89,27 @@ class CommitListView extends Component {
             submitCallback={this.searchForCommitsWithOutParams}
           />
         </div>
-        {filteredCommits.length > 0
-          ? <List>{commitItems}</List>
-          : <List>
+        {filteredCommits.length > 0 ? (
+          <List>{commitItems}</List>
+        ) : (
+          <List>
             <InfiniteScroll
               pageStart={0}
               loadMore={loadNextPageForCommits.bind(this)}
               hasMore={nextPageOfCommits !== null}
-              loader={<div className="loader" key={0}>Loading ...</div>}
+              loader={
+                <div className="loader" key={0}>
+                  Loading ...
+                </div>
+              }
               useWindow={false}
               initialLoad={false}
               isReverse={false}
             >
               {commitItems}
             </InfiniteScroll>
-            </List>
-        }
+          </List>
+        )}
       </div>
     );
   }

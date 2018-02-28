@@ -19,7 +19,6 @@ export default function reducer(
     case types.LOAD_COMMITS_FINISHED: {
       return {
         ...state,
-        reponame: action.payload.reponame,
         commits: action.payload.commits,
         nextPageOfCommits: action.payload.nextPageOfCommits,
         filteredCommits: []
@@ -28,8 +27,8 @@ export default function reducer(
     case types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED: {
       return {
         ...state,
-        commits: state.commits.concat(action.payload.nextCommits),
-        nextPageOfCommits: action.payload.nextPageOfCommits,
+        commits: state.commits.concat(action.payload.commits),
+        nextPageOfCommits: action.payload.nextPageOfCommits
       };
     }
     case types.FILTER_COMMITS_FINISHED: {
