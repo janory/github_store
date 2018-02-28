@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import RepoItem from "../../components/RepoItem/index";
 import {
   initReposForUser,
-  loadCommitsAndNavigateToCommits,
   loadNextPageForRepos
 } from "../../actions/repositoryActions";
+
+import { loadCommitsAndNavigateToCommits } from "../../actions/commitActions";
 import InfiniteScroll from "react-infinite-scroller";
 import "./RepoListView.css";
 

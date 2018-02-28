@@ -8,14 +8,14 @@ import {
   removeFilterForCommits,
   searchForCommits,
   loadNextPageForCommits
-} from "../../actions/repositoryActions";
+} from "../../actions/commitActions";
 import InfiniteScroll from "react-infinite-scroller";
 import "./CommitListView.css";
 
 const mapStateToProps = state => ({
-  commits: state.repository.commits,
-  filteredCommits: state.repository.filteredCommits,
-  nextPageOfCommits: state.repository.nextPageOfCommits
+  commits: state.commit.commits,
+  filteredCommits: state.commit.filteredCommits,
+  nextPageOfCommits: state.commit.nextPageOfCommits
 });
 
 const mapDispatchToProps = dispatch => ({
