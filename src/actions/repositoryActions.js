@@ -30,7 +30,11 @@ export const loadNextPageForRepos = (dispatch, getState) => {
   );
 };
 
-const loadReposForUser = (finishEvent, failureEvent, url) => async dispatch => {
+export const loadReposForUser = (
+  finishEvent,
+  failureEvent,
+  url
+) => async dispatch => {
   try {
     const response = await fetch(url, {
       method: "GET",
