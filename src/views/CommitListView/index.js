@@ -82,14 +82,24 @@ class CommitListView extends Component {
             <CommitItem
               key={idx}
               message={commitItem.commit.message}
-              author={commitItem.commit.author}
+              nameOrLogin={
+                commitItem.author
+                  ? commitItem.author.login
+                  : commitItem.commit.author.name
+              }
+              commitDate={commitItem.commit.author.date}
             />
           ))
         : commits.map((commitItem, idx) => (
             <CommitItem
               key={idx}
               message={commitItem.commit.message}
-              author={commitItem.commit.author}
+              nameOrLogin={
+                commitItem.author
+                  ? commitItem.author.login
+                  : commitItem.commit.author.name
+              }
+              commitDate={commitItem.commit.author.date}
             />
           ));
 

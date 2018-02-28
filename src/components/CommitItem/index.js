@@ -1,13 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
+import dateformat from "dateformat";
 import { ListItem, ListItemText } from "material-ui/List";
 import Divider from "material-ui/Divider";
 
-const CommitItem = ({ message, author }) => {
+const CommitItem = ({ message, nameOrLogin, commitDate }) => {
   return (
     <div className="commit-item">
       <ListItem>
-        <ListItemText primary={message} secondary={author.name} />
+        <ListItemText
+          primary={message}
+          secondary={
+            nameOrLogin +
+            " commited on " +
+            dateformat(new Date(commitDate), "d mmm yyyy")
+          }
+        />
       </ListItem>
       <Divider />
     </div>
@@ -16,9 +24,8 @@ const CommitItem = ({ message, author }) => {
 
 CommitItem.propTypes = {
   message: PropTypes.string.isRequired,
-  author: PropTypes.shape({
-    name: PropTypes.string.isRequired
-  }).isRequired
+  nameOrLogin: PropTypes.string.isRequired,
+  commitDate: PropTypes.string.isRequired
 };
 
 export default CommitItem;
