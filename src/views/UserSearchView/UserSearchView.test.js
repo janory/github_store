@@ -14,6 +14,8 @@ describe("the UserSearchView component", () => {
     const wrapper = shallow(
       <UserSearchView
         loadReposAndNavigateToRepos={stubbedLoadReposAndNavigateToRepos}
+        userNotFound={false}
+        removeFilterForUser={() => {}}
       />
     );
 
@@ -30,7 +32,11 @@ describe("the UserSearchView component", () => {
   it("should trigger search when the search field is not empty", () => {
     const onSearchButtonClick = sinon.spy();
     const wrapper = mount(
-      <UserSearchView loadReposAndNavigateToRepos={onSearchButtonClick} />
+      <UserSearchView
+        loadReposAndNavigateToRepos={onSearchButtonClick}
+        userNotFound={false}
+        removeFilterForUser={() => {}}
+      />
     );
     wrapper.find("input").simulate("change", { target: { value: "someuser" } });
     wrapper

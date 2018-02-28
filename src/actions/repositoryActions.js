@@ -6,12 +6,14 @@ import parseLinkHeader from "parse-link-header";
 const PAGE_SIZE = 20;
 
 export const loadReposAndNavigateToRepos = username => async dispatch => {
-  await dispatch(initReposForUser(username));
-  dispatch(push(`/user/${username}/repos`));
+  const loaded = await dispatch(initReposForUser(username));
+  if (loaded) {
+    dispatch(push(`/user/${username}/repos`));
+  }
 };
 
 export const initReposForUser = username => async dispatch => {
-  await dispatch(
+  return await dispatch(
     loadReposForUser(
       types.LOAD_REPOSITORIES_FINISHED,
       types.LOAD_REPOSITORIES_FAILED,
@@ -28,6 +30,10 @@ export const loadNextPageForRepos = (dispatch, getState) => {
       getState().repository.nextPageOfRepos
     )
   );
+};
+
+export const removeFilterForUser = {
+  type: types.REMOVE_FILTER_FOR_USER
 };
 
 export const loadReposForUser = (
