@@ -9,7 +9,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(loadReposAndNavigateToRepos(username))
 });
 
-class UserSearchView extends Component {
+export class UserSearchView extends Component {
   static propTypes = {
     loadReposAndNavigateToRepos: PropTypes.func.isRequired
   };
