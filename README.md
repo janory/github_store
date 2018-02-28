@@ -28,17 +28,17 @@ __GitHub Store was tested with the following GitHub users: facebook, ScaCap__
 
 ### To install the dependencies
 ```
-npm/yarn install
+yarn install
 ```
 
 ### To start the application
 ```
-npm/yarn start
+yarn start
 ```
 
 ### To run tests
 ```
-npm/yarn test
+yarn test
 ```
 
 ## Limitations:
