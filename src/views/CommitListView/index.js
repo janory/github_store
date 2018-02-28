@@ -43,8 +43,8 @@ class CommitListView extends Component {
   }
 
   searchForCommitsWithOutParams = message => {
-    const { reponame, searchForCommits, match } = this.props;
-    searchForCommits(match.params.owner, reponame, message);
+    const { searchForCommits, match } = this.props;
+    searchForCommits(match.params.owner, match.params.repo, message);
   };
 
   clearFilter = () => {
