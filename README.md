@@ -41,7 +41,7 @@ yarn start
 yarn test
 ```
 
-## Limitations:
+## Limitations
 
 ### Searching for commits
 Searching for commits in forked repos is not allowed, even GitHub itself can't do that.
@@ -51,6 +51,7 @@ For example __Bubble-Picker__ is a forked repository in ScaCap: https://github.c
 Searching for __"Merge"__ does not give you any results:
 
 https://github.com/ScaCap/Bubble-Picker/search?q=Merge&type=Commits&utf8=%E2%9C%93
+
 
 ### Using the GitHub API
 Please keep in mind the GitHub API's rate-limitation rule: You can only do 60 requests/hour anonymously.
