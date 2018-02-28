@@ -44,7 +44,7 @@ yarn test
 ## Limitations:
 
 ### Searching for commits
-Searching for commits in forked repos is not alloved, even github itself can't do that.
+Searching for commits in forked repos is not allowed, even GitHub itself can't do that.
 
 For example __Bubble-Picker__ is a forked repository in ScaCap: https://github.com/ScaCap/Bubble-Picker
 
@@ -53,19 +53,19 @@ Searching for __"Merge"__ does not give you any results:
 https://github.com/ScaCap/Bubble-Picker/search?q=Merge&type=Commits&utf8=%E2%9C%93
 
 ### Using the GitHub API
-Please keep in mind the GitHub API's rate-limitation rule: You can only do 60 request/hour anonymously.
+Please keep in mind the GitHub API's rate-limitation rule: You can only do 60 requests/hour anonymously.
 
 Source: https://developer.github.com/v3/#rate-limiting
 
-## What else code have been done
-* Add localization instead of hardcoded values
-* Use nice loaders during back-end calls (for example spinning icon)
-* Give feedback for the user if an error happens
+## What else could have been done
+* Add localizations (for example react-i18next) instead of hardcoded values
 * Implement more tests
+* Give feedback for the user if an error happens
+* Use nice loaders during back-end calls (for example spinning icons)
 * Improve overall design
 
 ## License
-GitHub Store is Open Source software released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html).
+GitHub Store is an Open Source software released under the [Apache 2.0 license](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 
 
