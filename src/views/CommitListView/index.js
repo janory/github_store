@@ -4,24 +4,23 @@ import { connect } from "react-redux";
 import CommitItem from "../../components/CommitItem/index";
 import SearchBar from "../../components/SearchBar/index";
 import {
-  loadCommitsForRepo,
+  initCommitsForRepo,
   removeFilterForCommits,
   searchForCommits,
   loadNextPageForCommits
 } from "../../actions/repositoryActions";
-import "./CommitListView.css";
 import InfiniteScroll from "react-infinite-scroller";
+import "./CommitListView.css";
 
 const mapStateToProps = state => ({
-  reponame: state.repository.reponame,
   commits: state.repository.commits,
   filteredCommits: state.repository.filteredCommits,
   nextPageOfCommits: state.repository.nextPageOfCommits
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadCommitsForRepo: (owner, reponame) =>
-    dispatch(loadCommitsForRepo(owner, reponame)),
+  initCommitsForRepo: (owner, reponame) =>
+    dispatch(initCommitsForRepo(owner, reponame)),
   searchForCommits: (owner, reponame, message) =>
     dispatch(searchForCommits(owner, reponame, message)),
   removeFilterForCommits: () => dispatch(removeFilterForCommits),
@@ -38,7 +37,7 @@ class CommitListView extends Component {
     const { match, commits } = this.props;
 
     if (commits.length === 0) {
-      this.props.loadCommitsForRepo(match.params.owner, match.params.repo);
+      this.props.initCommitsForRepo(match.params.owner, match.params.repo);
     }
   }
 
@@ -54,7 +53,6 @@ class CommitListView extends Component {
   render() {
     const {
       nextPageOfCommits,
-      reponame,
       match,
       commits,
       filteredCommits,
@@ -81,7 +79,7 @@ class CommitListView extends Component {
     return (
       <div className="commit-list-view">
         <h1>Owner: {match.params.owner}</h1>
-        <h1>Repository: {reponame}</h1>
+        <h1>Repository: {match.params.repo}</h1>
         <div>
           <SearchBar
             text={"Search for commits "}

@@ -3,19 +3,23 @@ import List from "material-ui/List";
 import { connect } from "react-redux";
 import RepoItem from "../../components/RepoItem/index";
 import {
-  loadReposForUser,
-  loadCommitsAndNavigateToRepoDetails
+  initReposForUser,
+  loadCommitsAndNavigateToCommits,
+  loadNextPageForRepos
 } from "../../actions/repositoryActions";
+import InfiniteScroll from "react-infinite-scroller";
 import "./RepoListView.css";
 
 const mapStateToProps = state => ({
-  repositories: state.repository.repositories
+  repositories: state.repository.repositories,
+  nextPageOfRepos: state.repository.nextPageOfRepos
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadReposForUser: username => dispatch(loadReposForUser(username)),
-  loadCommitsAndNavigateToRepoDetails: (owner, reponame) =>
-    dispatch(loadCommitsAndNavigateToRepoDetails(owner, reponame))
+  initReposForUser: username => dispatch(initReposForUser(username)),
+  loadNextPageForRepos: () => dispatch(loadNextPageForRepos),
+  loadCommitsAndNavigateToCommits: (owner, reponame) =>
+    dispatch(loadCommitsAndNavigateToCommits(owner, reponame))
 });
 
 class RepoListView extends Component {
@@ -23,12 +27,12 @@ class RepoListView extends Component {
     const { repositories, match } = this.props;
 
     if (repositories.length === 0) {
-      this.props.loadReposForUser(match.params.username);
+      this.props.initReposForUser(match.params.username);
     }
   }
 
   render() {
-    const { match } = this.props;
+    const { match, nextPageOfRepos, loadNextPageForRepos } = this.props;
 
     const repos = this.props.repositories.map(repos => (
       <RepoItem
@@ -36,14 +40,30 @@ class RepoListView extends Component {
         name={repos.name}
         owner={match.params.username}
         description={repos.description}
-        callback={this.props.loadCommitsAndNavigateToRepoDetails}
+        callback={this.props.loadCommitsAndNavigateToCommits}
       />
     ));
 
     return (
       <div className="repo-list-view">
         <h1>Owner: {match.params.username}</h1>
-        <List>{repos}</List>
+        <List>
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={loadNextPageForRepos.bind(this)}
+            hasMore={nextPageOfRepos !== null}
+            loader={
+              <div className="loader" key={0}>
+                Loading ...
+              </div>
+            }
+            useWindow={false}
+            initialLoad={false}
+            isReverse={false}
+          >
+            {repos}
+          </InfiniteScroll>
+        </List>
       </div>
     );
   }

@@ -5,7 +5,8 @@ export default function reducer(
     repositories: [],
     commits: [],
     filteredCommits: [],
-    nextPageOfCommits: null
+    nextPageOfCommits: null,
+    nextPageOfRepos: null
   },
   action
 ) {
@@ -13,7 +14,15 @@ export default function reducer(
     case types.LOAD_REPOSITORIES_FINISHED: {
       return {
         ...state,
-        repositories: action.payload.repositories
+        repositories: action.payload.repositories,
+        nextPageOfRepos: action.payload.nextPageOfRepos
+      };
+    }
+    case types.LOAD_NEXT_PAGE_OF_REPOSITORIES_FINISHED: {
+      return {
+        ...state,
+        repositories: state.repositories.concat(action.payload.repositories),
+        nextPageOfRepos: action.payload.nextPageOfRepos
       };
     }
     case types.LOAD_COMMITS_FINISHED: {

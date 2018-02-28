@@ -6,21 +6,38 @@ import parseLinkHeader from "parse-link-header";
 const PAGE_SIZE = 20;
 
 export const loadReposAndNavigateToRepos = username => async dispatch => {
-  await dispatch(loadReposForUser(username));
+  await dispatch(initReposForUser(username));
   dispatch(push(`/user/${username}/repos`));
 };
 
-export const loadReposForUser = username => async dispatch => {
+export const initReposForUser = username => dispatch => {
+  dispatch(
+    loadReposForUser(
+      types.LOAD_REPOSITORIES_FINISHED,
+      types.LOAD_REPOSITORIES_FAILED,
+      `${config.githubApi}/users/${username}/repos?per_page=${PAGE_SIZE}`
+    )
+  );
+};
+
+export const loadNextPageForRepos = (dispatch, getState) => {
+  dispatch(
+    loadReposForUser(
+      types.LOAD_NEXT_PAGE_OF_REPOSITORIES_FINISHED,
+      types.LOAD_NEXT_PAGE_OF_REPOSITORIES_FAILED,
+      getState().repository.nextPageOfRepos
+    )
+  );
+};
+
+const loadReposForUser = (finishEvent, failureEvent, url) => async dispatch => {
   try {
-    const response = await fetch(
-      `${config.githubApi}/users/${username}/repos?per_page=${PAGE_SIZE}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json"
-        }
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
       }
-    );
+    });
 
     if (!response.ok) {
       throw Error(response.statusText);
@@ -28,17 +45,21 @@ export const loadReposForUser = username => async dispatch => {
 
     const repositories = await response.json();
 
+    const links = parseLinkHeader(response.headers.get("Link"));
+    const nextPageOfRepos = links && links.next ? links.next.url : null;
+
     dispatch({
-      type: types.LOAD_REPOSITORIES_FINISHED,
+      type: finishEvent,
       payload: {
-        repositories
+        repositories,
+        nextPageOfRepos
       }
     });
 
     return true;
   } catch (e) {
     dispatch({
-      type: types.LOAD_REPOSITORIES_FAILED,
+      type: failureEvent,
       payload: {
         error: e.message
       }
@@ -47,11 +68,11 @@ export const loadReposForUser = username => async dispatch => {
   }
 };
 
-export const loadCommitsAndNavigateToRepoDetails = (
+export const loadCommitsAndNavigateToCommits = (
   owner,
   reponame
 ) => async dispatch => {
-  await dispatch(loadCommitsForRepo(owner, reponame));
+  await dispatch(initCommitsForRepo(owner, reponame));
   dispatch(push(`/repos/${owner}/${reponame}/commits`));
 };
 
@@ -103,26 +124,29 @@ export const removeFilterForCommits = {
   type: types.REMOVE_FILTER_FOR_COMMITS
 };
 
-
 export const loadNextPageForCommits = (dispatch, getState) => {
-  dispatch(loadCommits(
-    types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED,
-    types.LOAD_NEXT_PAGE_OF_COMMITS_FAILED,
-    getState().repository.nextPageOfCommits
-  ));
+  dispatch(
+    loadCommits(
+      types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED,
+      types.LOAD_NEXT_PAGE_OF_COMMITS_FAILED,
+      getState().repository.nextPageOfCommits
+    )
+  );
 };
 
-export const loadCommitsForRepo = (owner, reponame) => dispatch => {
-  dispatch(loadCommits(
-    types.LOAD_COMMITS_FINISHED,
-    types.LOAD_COMMITS_FAILED,
-    `${
-      config.githubApi
+export const initCommitsForRepo = (owner, reponame) => dispatch => {
+  dispatch(
+    loadCommits(
+      types.LOAD_COMMITS_FINISHED,
+      types.LOAD_COMMITS_FAILED,
+      `${
+        config.githubApi
       }/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`
-  ));
+    )
+  );
 };
 
-const loadCommits = (finisEvent, failureEvent, url) => async dispatch => {
+const loadCommits = (finishEvent, failureEvent, url) => async dispatch => {
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -141,7 +165,7 @@ const loadCommits = (finisEvent, failureEvent, url) => async dispatch => {
     const nextPageOfCommits = links && links.next ? links.next.url : null;
 
     dispatch({
-      type: finisEvent,
+      type: finishEvent,
       payload: {
         commits,
         nextPageOfCommits
