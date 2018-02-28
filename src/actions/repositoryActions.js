@@ -1,6 +1,7 @@
 import * as types from "../constants/ActionTypes";
 import config from "../config";
 import { push } from "react-router-redux";
+import parseLinkHeader from "parse-link-header";
 
 const PAGE_SIZE = 20;
 
@@ -27,13 +28,6 @@ export const loadReposForUser = username => async dispatch => {
 
     const repositories = await response.json();
 
-    // Add paging with infinite-scroller:
-    // Link: <https://api.github.com/user/69631/repos?per_page=20&page=8>; rel="prev", <https://api.github.com/user/69631/repos?per_page=20&page=1>; rel="first"
-    // Link can be null if it's less than 20
-    // we can check this on the component side and call the infinite-scroller
-    console.log("Link: " + response.headers.get("Link"));
-
-    // set the next page link in the store if it's given or set it to null
     dispatch({
       type: types.LOAD_REPOSITORIES_FINISHED,
       payload: {
@@ -86,13 +80,6 @@ export const searchForCommits = (
 
     const commits = await response.json();
 
-    // Add paging with infinite-scroller:
-    // Link: <https://api.github.com/user/69631/repos?per_page=20&page=8>; rel="prev", <https://api.github.com/user/69631/repos?per_page=20&page=1>; rel="first"
-    // Link can be null if it's less than 20
-    // we can check this on the component side and call the infinite-scroller
-    console.log("Link: " + response.headers.get("Link"));
-
-    // set the next page link in the store if it's given or set it to null
     dispatch({
       type: types.FILTER_COMMITS_FINISHED,
       payload: {
@@ -116,12 +103,51 @@ export const removeFilterForCommits = {
   type: types.REMOVE_FILTER_FOR_COMMITS
 };
 
-export const loadCommitsForRepo = (owner, reponame) => async dispatch => {
+export const loadNextPageForCommits = async (dispatch, getState) => {
   try {
-    const response = await fetch(
-      `${
-        config.githubApi
-      }/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`,
+    const currentState = getState();
+    const response = await fetch(currentState.repository.nextPageOfCommits,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json"
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+
+    const nextCommits = await response.json();
+
+    const links = parseLinkHeader(response.headers.get("Link"));
+    const nextPageOfCommits = (links && links.next) ? links.next.url : null;
+
+    // set the next page link in the store if it's given or set it to null
+    dispatch({
+      type: types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED,
+      payload: {
+        nextCommits,
+        nextPageOfCommits
+      }
+    });
+
+    return true;
+  } catch (e) {
+    dispatch({
+      type: types.LOAD_NEXT_PAGE_OF_COMMITS_FAILED,
+      payload: {
+        error: e.message
+      }
+    });
+    return false;
+  }
+};
+
+export const loadCommitsForRepo = (owner, reponame) => async (dispatch, getState) => {
+  try {
+    const response = await fetch(`${config.githubApi}/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`,
       {
         method: "GET",
         headers: {
@@ -136,18 +162,16 @@ export const loadCommitsForRepo = (owner, reponame) => async dispatch => {
 
     const commits = await response.json();
 
-    // Add paging with infinite-scroller:
-    // Link: <https://api.github.com/user/69631/repos?per_page=20&page=8>; rel="prev", <https://api.github.com/user/69631/repos?per_page=20&page=1>; rel="first"
-    // Link can be null if it's less than 20
-    // we can check this on the component side and call the infinite-scroller
-    console.log("Link: " + response.headers.get("Link"));
+    const links = parseLinkHeader(response.headers.get("Link"));
+    const nextPageOfCommits = (links && links.next) ? links.next.url : null;
 
     // set the next page link in the store if it's given or set it to null
     dispatch({
       type: types.LOAD_COMMITS_FINISHED,
       payload: {
         reponame,
-        commits
+        commits,
+        nextPageOfCommits
       }
     });
 

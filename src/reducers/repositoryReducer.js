@@ -2,10 +2,10 @@ import * as types from "../constants/ActionTypes";
 
 export default function reducer(
   state = {
-    username: null,
     repositories: [],
     commits: [],
-    filteredCommits: []
+    filteredCommits: [],
+    nextPageOfCommits: null
   },
   action
 ) {
@@ -21,7 +21,15 @@ export default function reducer(
         ...state,
         reponame: action.payload.reponame,
         commits: action.payload.commits,
+        nextPageOfCommits: action.payload.nextPageOfCommits,
         filteredCommits: []
+      };
+    }
+    case types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED: {
+      return {
+        ...state,
+        commits: state.commits.concat(action.payload.nextCommits),
+        nextPageOfCommits: action.payload.nextPageOfCommits,
       };
     }
     case types.FILTER_COMMITS_FINISHED: {

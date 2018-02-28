@@ -6,14 +6,18 @@ import SearchBar from "../../components/SearchBar/index";
 import {
   loadCommitsForRepo,
   removeFilterForCommits,
-  searchForCommits
+  searchForCommits,
+  loadNextPageForCommits
 } from "../../actions/repositoryActions";
 import "./RepoDetailsView.css";
+import InfiniteScroll from 'react-infinite-scroller';
+
 
 const mapStateToProps = state => ({
   reponame: state.repository.reponame,
   commits: state.repository.commits,
-  filteredCommits: state.repository.filteredCommits
+  filteredCommits: state.repository.filteredCommits,
+  nextPageOfCommits: state.repository.nextPageOfCommits
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -21,7 +25,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(loadCommitsForRepo(owner, reponame)),
   searchForCommits: (owner, reponame, message) =>
     dispatch(searchForCommits(owner, reponame, message)),
-  removeFilterForCommits: () => dispatch(removeFilterForCommits)
+  removeFilterForCommits: () => dispatch(removeFilterForCommits),
+  loadNextPageForCommits: () => dispatch(loadNextPageForCommits)
 });
 
 class RepoListView extends Component {
@@ -48,7 +53,7 @@ class RepoListView extends Component {
   };
 
   render() {
-    const { reponame, match, commits, filteredCommits } = this.props;
+    const { nextPageOfCommits, reponame, match, commits, filteredCommits, loadNextPageForCommits } = this.props;
 
     const commitItems =
       filteredCommits.length > 0
@@ -78,7 +83,22 @@ class RepoListView extends Component {
             submitCallback={this.searchForCommitsWithOutParams}
           />
         </div>
-        <List>{commitItems}</List>
+        {filteredCommits.length > 0
+          ? <List>{commitItems}</List>
+          : <List>
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={loadNextPageForCommits.bind(this)}
+              hasMore={nextPageOfCommits !== null}
+              loader={<div className="loader" key={0}>Loading ...</div>}
+              useWindow={false}
+              initialLoad={false}
+              isReverse={false}
+            >
+              {commitItems}
+            </InfiniteScroll>
+            </List>
+        }
       </div>
     );
   }
