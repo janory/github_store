@@ -1,9 +1,9 @@
-div.repo-details-view {
+div.commit-list-view {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-div.repo-details-view ul {
+div.commit-list-view ul {
   overflow: auto;
 }

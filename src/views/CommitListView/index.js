@@ -9,7 +9,7 @@ import {
   searchForCommits,
   loadNextPageForCommits
 } from "../../actions/repositoryActions";
-import "./RepoDetailsView.css";
+import "./CommitListView.css";
 import InfiniteScroll from 'react-infinite-scroller';
 
 
@@ -29,7 +29,7 @@ const mapDispatchToProps = dispatch => ({
   loadNextPageForCommits: () => dispatch(loadNextPageForCommits)
 });
 
-class RepoListView extends Component {
+class CommitListView extends Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
@@ -73,7 +73,7 @@ class RepoListView extends Component {
           ));
 
     return (
-      <div className="repo-details-view">
+      <div className="commit-list-view">
         <h1>Owner: {match.params.owner}</h1>
         <h1>Repository: {reponame}</h1>
         <div>
@@ -104,4 +104,4 @@ class RepoListView extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RepoListView);
+export default connect(mapStateToProps, mapDispatchToProps)(CommitListView);
