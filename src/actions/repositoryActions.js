@@ -10,8 +10,8 @@ export const loadReposAndNavigateToRepos = username => async dispatch => {
   dispatch(push(`/user/${username}/repos`));
 };
 
-export const initReposForUser = username => dispatch => {
-  dispatch(
+export const initReposForUser = username => async dispatch => {
+  await dispatch(
     loadReposForUser(
       types.LOAD_REPOSITORIES_FINISHED,
       types.LOAD_REPOSITORIES_FAILED,

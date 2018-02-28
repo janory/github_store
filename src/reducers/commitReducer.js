@@ -4,6 +4,7 @@ export default function reducer(
   state = {
     commits: [],
     filteredCommits: [],
+    filtered: false,
     nextPageOfCommits: null
   },
   action
@@ -14,7 +15,8 @@ export default function reducer(
         ...state,
         commits: action.payload.commits,
         nextPageOfCommits: action.payload.nextPageOfCommits,
-        filteredCommits: []
+        filteredCommits: [],
+        filtered: false
       };
     }
     case types.LOAD_NEXT_PAGE_OF_COMMITS_FINISHED: {
@@ -27,13 +29,16 @@ export default function reducer(
     case types.FILTER_COMMITS_FINISHED: {
       return {
         ...state,
-        filteredCommits: action.payload.filteredCommits
+        filteredCommits: action.payload.filteredCommits,
+        filtered: true
       };
     }
     case types.REMOVE_FILTER_FOR_COMMITS: {
       return {
         ...state,
-        filteredCommits: []
+        filteredCommits: [],
+        filtered: false
+
       };
     }
     default: {

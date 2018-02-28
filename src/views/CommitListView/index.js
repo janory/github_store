@@ -15,6 +15,7 @@ import "./CommitListView.css";
 const mapStateToProps = state => ({
   commits: state.commit.commits,
   filteredCommits: state.commit.filteredCommits,
+  filtered: state.commit.filtered,
   nextPageOfCommits: state.commit.nextPageOfCommits
 });
 
@@ -56,11 +57,12 @@ class CommitListView extends Component {
       match,
       commits,
       filteredCommits,
+      filtered,
       loadNextPageForCommits
     } = this.props;
 
     const commitItems =
-      filteredCommits.length > 0
+      filtered > 0
         ? filteredCommits.map((commitItem, idx) => (
             <CommitItem
               key={idx}
@@ -87,9 +89,12 @@ class CommitListView extends Component {
             submitCallback={this.searchForCommitsWithOutParams}
           />
         </div>
-        {filteredCommits.length > 0 ? (
-          <List>{commitItems}</List>
-        ) : (
+        {filtered ? filteredCommits.length > 0
+          ? (
+            <List>{commitItems}</List>
+            )
+          : (<h1>You are either not the owner of this repo, or there are no commits with the given filter.</h1>)
+          : (
           <List>
             <InfiniteScroll
               pageStart={0}
