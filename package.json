@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "add": "^2.0.6",
     "history": "^4.7.2",
     "material-ui": "^1.0.0-beta.34",
     "material-ui-icons": "^1.0.0-beta.35",
@@ -18,8 +17,7 @@
     "react-scripts": "1.1.1",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
-    "yarn": "^1.5.1"
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,8 +28,11 @@
     "format": "prettier --write 'src/**/**/*.js'"
   },
   "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "prettier": "^1.10.2"
+    "prettier": "^1.10.2",
+    "sinon": "^4.4.2"
   }
 }
