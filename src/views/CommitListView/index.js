@@ -89,12 +89,16 @@ class CommitListView extends Component {
             submitCallback={this.searchForCommitsWithOutParams}
           />
         </div>
-        {filtered ? filteredCommits.length > 0
-          ? (
+        {filtered ? (
+          filteredCommits.length > 0 ? (
             <List>{commitItems}</List>
-            )
-          : (<h1>You are either not the owner of this repo, or there are no commits with the given filter.</h1>)
-          : (
+          ) : (
+            <h1>
+              You are either not the owner of this repo, or there are no commits
+              with the given filter.
+            </h1>
+          )
+        ) : (
           <List>
             <InfiniteScroll
               pageStart={0}

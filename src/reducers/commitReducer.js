@@ -38,7 +38,6 @@ export default function reducer(
         ...state,
         filteredCommits: [],
         filtered: false
-
       };
     }
     default: {

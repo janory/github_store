@@ -11,7 +11,7 @@ export const loadCommitsAndNavigateToCommits = (
 ) => async dispatch => {
   await dispatch(initCommitsForRepo(owner, reponame));
   dispatch(push(`/repos/${owner}/${reponame}/commits`));
-}
+};
 
 export const initCommitsForRepo = (owner, reponame) => async dispatch => {
   await dispatch(
@@ -20,7 +20,7 @@ export const initCommitsForRepo = (owner, reponame) => async dispatch => {
       types.LOAD_COMMITS_FAILED,
       `${
         config.githubApi
-        }/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`
+      }/repos/${owner}/${reponame}/commits?per_page=${PAGE_SIZE}`
     )
   );
 };
