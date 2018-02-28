@@ -106,7 +106,7 @@ class CommitListView extends Component {
             <List>{commitItems}</List>
           ) : (
             <h1>
-              You are either not the owner of this repo, or there are no commits
+              The given user is either not the owner of this repo, or there are no commits
               with the given filter.
             </h1>
           )
