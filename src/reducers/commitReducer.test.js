@@ -7,7 +7,7 @@ describe("the commit reducer", () => {
       type: types.LOAD_COMMITS_FINISHED,
       payload: {
         commits: ["commit1", "commit2", "commit3"],
-        nextPageOfCommits: "http://the.url.of.the.next.page",
+        nextPageOfCommits: "http://the.url.of.the.next.page"
       }
     });
 
