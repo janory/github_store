@@ -13,7 +13,7 @@ const mockResponse = (status, statusText, extraHeaders, response) => {
 };
 
 describe("repository actions", () => {
-  it("should create the loadReposForUser function which dispatches and event with repos and the nextPage in the payload", async () => {
+  it("should dispatches the repos and the nextPage as payload when the loadReposForUser function is called", async () => {
     const dispatch = jest.fn();
 
     global.fetch = jest.fn().mockImplementation(() =>
