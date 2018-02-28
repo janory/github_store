@@ -1,0 +1,14 @@
+div.user-info > div.user-info-card {
+  max-width: 100px;
+  min-width: 100px;
+  float: left;
+}
+
+div.user-info > div.user-info-card > div.card-media {
+  height: 100px;
+}
+
+div.user-info > div.user-info-details {
+  margin-left: 20px;
+  float: left;
+}

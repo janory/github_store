@@ -24,7 +24,10 @@ describe("repository actions", () => {
           {
             Link: '<http://the.url.of.the.next.page>; rel="next"'
           },
-          ["repo1", "repo2"]
+          [
+            { name: "repo1", owner: { avatar_url: "http://some.avatar.url" } },
+            "repo2"
+          ]
         )
       )
     );
@@ -40,8 +43,12 @@ describe("repository actions", () => {
     expect(dispatch).toHaveBeenCalledWith({
       type: types.LOAD_REPOSITORIES_FINISHED,
       payload: {
-        repositories: ["repo1", "repo2"],
-        nextPageOfRepos: "http://the.url.of.the.next.page"
+        repositories: [
+          { name: "repo1", owner: { avatar_url: "http://some.avatar.url" } },
+          "repo2"
+        ],
+        nextPageOfRepos: "http://the.url.of.the.next.page",
+        avatarUrl: "http://some.avatar.url"
       }
     });
   });

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import List from "material-ui/List";
 import { connect } from "react-redux";
 import RepoItem from "../../components/RepoItem/index";
+import UserInfo from "../../components/UserInfo/index";
 import {
   initReposForUser,
   loadNextPageForRepos
@@ -14,7 +15,8 @@ import "./RepoListView.css";
 
 const mapStateToProps = state => ({
   repositories: state.repository.repositories,
-  nextPageOfRepos: state.repository.nextPageOfRepos
+  nextPageOfRepos: state.repository.nextPageOfRepos,
+  avatarUrl: state.repository.avatarUrl
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -42,7 +44,12 @@ class RepoListView extends Component {
   }
 
   render() {
-    const { match, nextPageOfRepos, loadNextPageForRepos } = this.props;
+    const {
+      match,
+      nextPageOfRepos,
+      avatarUrl,
+      loadNextPageForRepos
+    } = this.props;
 
     const repos = this.props.repositories.map(repos => (
       <RepoItem
@@ -56,7 +63,7 @@ class RepoListView extends Component {
 
     return (
       <div className="repo-list-view">
-        <h1>Owner: {match.params.username}</h1>
+        <UserInfo username={match.params.username} avatarUrl={avatarUrl} />
         <List>
           <InfiniteScroll
             pageStart={0}

@@ -56,7 +56,8 @@ export const loadReposForUser = (
       type: finishEvent,
       payload: {
         repositories,
-        nextPageOfRepos
+        nextPageOfRepos,
+        avatarUrl: repositories[0].owner.avatar_url
       }
     });
 

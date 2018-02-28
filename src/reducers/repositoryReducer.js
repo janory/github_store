@@ -3,7 +3,8 @@ import * as types from "../constants/ActionTypes";
 export default function reducer(
   state = {
     repositories: [],
-    nextPageOfRepos: null
+    nextPageOfRepos: null,
+    avatarUrl: null
   },
   action
 ) {
@@ -12,7 +13,8 @@ export default function reducer(
       return {
         ...state,
         repositories: action.payload.repositories,
-        nextPageOfRepos: action.payload.nextPageOfRepos
+        nextPageOfRepos: action.payload.nextPageOfRepos,
+        avatarUrl: action.payload.avatarUrl
       };
     }
     case types.LOAD_NEXT_PAGE_OF_REPOSITORIES_FINISHED: {

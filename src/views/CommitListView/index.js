@@ -4,6 +4,7 @@ import List from "material-ui/List";
 import { connect } from "react-redux";
 import CommitItem from "../../components/CommitItem/index";
 import SearchBar from "../../components/SearchBar/index";
+import UserInfo from "../../components/UserInfo/index";
 import {
   initCommitsForRepo,
   removeFilterForCommits,
@@ -17,7 +18,8 @@ const mapStateToProps = state => ({
   commits: state.commit.commits,
   filteredCommits: state.commit.filteredCommits,
   filtered: state.commit.filtered,
-  nextPageOfCommits: state.commit.nextPageOfCommits
+  nextPageOfCommits: state.commit.nextPageOfCommits,
+  avatarUrl: state.repository.avatarUrl
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -70,7 +72,8 @@ class CommitListView extends Component {
       commits,
       filteredCommits,
       filtered,
-      loadNextPageForCommits
+      loadNextPageForCommits,
+      avatarUrl
     } = this.props;
 
     const commitItems =
@@ -92,8 +95,11 @@ class CommitListView extends Component {
 
     return (
       <div className="commit-list-view">
-        <h1>Owner: {match.params.owner}</h1>
-        <h1>Repository: {match.params.repo}</h1>
+        <UserInfo
+          username={match.params.owner}
+          respository={match.params.repo}
+          avatarUrl={avatarUrl}
+        />
         <div>
           <SearchBar
             text={"Search for commits "}
@@ -106,8 +112,8 @@ class CommitListView extends Component {
             <List>{commitItems}</List>
           ) : (
             <h1>
-              The given user is either not the owner of this repo, or there are no commits
-              with the given filter.
+              The given user is either not the owner of this repo, or there are
+              no commits with the given filter.
             </h1>
           )
         ) : (
