@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import List from "material-ui/List";
 import { connect } from "react-redux";
 import CommitItem from "../../components/CommitItem/index";
@@ -29,6 +30,17 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class CommitListView extends Component {
+  static propTypes = {
+    commits: PropTypes.array.isRequired,
+    filteredCommits: PropTypes.array.isRequired,
+    filtered: PropTypes.bool.isRequired,
+    nextPageOfCommits: PropTypes.string,
+    initCommitsForRepo: PropTypes.func.isRequired,
+    searchForCommits: PropTypes.func.isRequired,
+    removeFilterForCommits: PropTypes.func.isRequired,
+    loadNextPageForCommits: PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = { value: "" };

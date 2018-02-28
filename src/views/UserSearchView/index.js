@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import SearchBar from "../../components/SearchBar/index";
 import { connect } from "react-redux";
 import { loadReposAndNavigateToRepos } from "../../actions/repositoryActions";
@@ -9,6 +10,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class UserSearchView extends Component {
+  static propTypes = {
+    loadReposAndNavigateToRepos: PropTypes.func.isRequired
+  };
+
   render() {
     return (
       <div>

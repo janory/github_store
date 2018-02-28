@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Button from "material-ui/Button";
 import Clear from "material-ui-icons/Clear";
 import "./SearchBar.css";
@@ -6,6 +7,12 @@ import "./SearchBar.css";
 const ENTER_KEY = 13;
 
 export default class SearchBar extends Component {
+  static propTypes = {
+    text: PropTypes.string.isRequired,
+    submitCallback: PropTypes.func.isRequired,
+    clearCallback: PropTypes.func
+  };
+
   constructor(props) {
     super(props);
     this.state = { value: "" };

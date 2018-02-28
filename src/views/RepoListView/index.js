@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import List from "material-ui/List";
 import { connect } from "react-redux";
 import RepoItem from "../../components/RepoItem/index";
@@ -24,6 +25,14 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class RepoListView extends Component {
+  static propTypes = {
+    repositories: PropTypes.array.isRequired,
+    nextPageOfRepos: PropTypes.string,
+    initReposForUser: PropTypes.func.isRequired,
+    loadNextPageForRepos: PropTypes.func.isRequired,
+    loadCommitsAndNavigateToCommits: PropTypes.func.isRequired
+  };
+
   componentDidMount() {
     const { repositories, match } = this.props;
 
