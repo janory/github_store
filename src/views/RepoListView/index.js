@@ -74,7 +74,7 @@ class RepoListView extends Component {
                 Loading ...
               </div>
             }
-            useWindow={false}
+            useWindow={true}
             initialLoad={false}
             isReverse={false}
           >
